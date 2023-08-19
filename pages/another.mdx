@@ -29,3 +29,31 @@ export const Counter = () => {
 import Counters from '../components/counters'
 
 <Counters />
+
+## Message From Server
+
+import { useEffect } from 'react'
+
+export const ServerMessage = () => {
+  const [message, setMessage] = useState('')
+  useEffect(() => {
+    fetch('/api/app').then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          setMessage(data.message)
+        }).catch((err) => {
+          setMessage('error')
+        })
+      } else {
+        setMessage('error')
+      }
+    }).catch((err) => {
+      setMessage('error')
+    });
+  })
+  return (
+    <div>Message from server: {message}</div>
+  );
+};
+
+<ServerMessage />
